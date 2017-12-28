@@ -70,6 +70,29 @@ class Poly(Polynomial):
         if self.degree() == 0 and self.coef[0] == 0:
             return False
         return True
+    
+    
+class F2q(Poly):
+    _P = None
+    
+    @property
+    def P(self):
+        return type(self)._P
+    
+    @P.setter
+    def P(self, val):
+        type(self)._P = val
+        
+    @staticmethod
+    def getP():
+        print(_P)
+        
+    def setP(val):
+        print(_P)
+        
+    def __mul__(self, other):
+        res = self.Poly.__mul__(other)
+        res = res % P
 
 
 a_args = [1, 0, 1] # x^2 + 1
@@ -80,6 +103,11 @@ b_args = [F2(x) for x in b_args]
 
 poly_a = Poly(a_args)
 poly_b = Poly(b_args)
+
+F2q_1 = F2q(a_args)
+F2q_2 = F2q(b_args)
+F2q.setP(2)
+print(F2q_2.getP())
 
 def Testing(poly_a, poly_b):
     res = euclid(poly_a, poly_b)
