@@ -71,28 +71,21 @@ class Poly(Polynomial):
             return False
         return True
     
-    
+
 class F2q(Poly):
-    _P = None
+    P = []
     
-    @property
-    def P(self):
-        return type(self)._P
-    
-    @P.setter
-    def P(self, val):
-        type(self)._P = val
-        
-    @staticmethod
-    def getP():
-        print(_P)
-        
-    def setP(val):
-        print(_P)
-        
     def __mul__(self, other):
         res = self.Poly.__mul__(other)
         res = res % P
+
+    """ This method is for setting P """
+    def setP(self, value):
+        type(self).P = value
+    
+    """ This method is for getting P """
+    def getP(self):
+        return type(self).P
 
 
 a_args = [1, 0, 1] # x^2 + 1
@@ -106,8 +99,13 @@ poly_b = Poly(b_args)
 
 F2q_1 = F2q(a_args)
 F2q_2 = F2q(b_args)
-F2q.setP(2)
-print(F2q_2.getP())
+p_x = F2q(b_args)
+
+p_x.setP(Poly([1,0,1]))
+
+#F2q.P = Poly([0,1,1])
+print("P:",F2q_1.P)
+print(F2q_1.getP())
 
 def Testing(poly_a, poly_b):
     res = euclid(poly_a, poly_b)
