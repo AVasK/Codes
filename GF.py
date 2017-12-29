@@ -72,12 +72,31 @@ class Poly(Polynomial):
         return True
     
 
+def makeF2(array):
+    return [F2(x) for x in array]
+
+
 class F2q(Poly):
-    P = []
-    
+    P = Poly(makeF2([1]))
+     
+    def __init__(self, coef, _P = [], domain = None, window = None):
+        self.polynom = Poly(makeF2(coef), domain, window)
+        #Poly.__init__(self, coef, domain, window)
+        self.setP(_P)
+        if len(_P) > 0:
+            self.setP(_P)
+        self.polynom %= self.getP()
+        
     def __mul__(self, other):
-        res = self.Poly.__mul__(other)
+        res = polynom * self.getP()
         res = res % P
+        return res
+    
+    def __str__(self):
+        return self.polynom.__repr__()
+    
+    def __repr__(self):
+        return self.polynom.__repr__()
 
     """ This method is for setting P """
     def setP(self, value):
@@ -97,15 +116,13 @@ b_args = [F2(x) for x in b_args]
 poly_a = Poly(a_args)
 poly_b = Poly(b_args)
 
-F2q_1 = F2q(a_args)
-F2q_2 = F2q(b_args)
-p_x = F2q(b_args)
+F2q.P = Poly(makeF2([1,0,1]))
+q_1 = F2q([0,1,1,1], [1,0,1])
+q_2 = F2q([0,0,0,0,1])
+print("q1:",q_1)
+print("q2:",q_2)
 
-p_x.setP(Poly([1,0,1]))
-
-#F2q.P = Poly([0,1,1])
-print("P:",F2q_1.P)
-print(F2q_1.getP())
+q_1.setP(Poly([1,0,1]))
 
 def Testing(poly_a, poly_b):
     res = euclid(poly_a, poly_b)
